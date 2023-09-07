@@ -1,12 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 import { useNavigate } from "react-router-dom";
-import { Avatar, Button } from "@mui/material";
+import { Avatar, Box, Button, Tab } from "@mui/material";
 import BusinessCenterIcon from "@mui/icons-material/BusinessCenter";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
+import { TabContext, TabList, TabPanel } from "@mui/lab";
 
 const Profile = () => {
+  const [tabValue, setTabValue] = useState("1");
+
   const navigate = useNavigate();
 
   const handleBack = () => {
@@ -19,6 +22,15 @@ const Profile = () => {
 
   const handleFollowUser = () => {
     console.log("follow user");
+  };
+
+  const handleTabChange = (event, newValue) => {
+    setTabValue(newValue);
+    if (newValue === 4) {
+      console.log("likes tweet");
+    } else if (newValue === 1) {
+      console.log("users tweets");
+    }
   };
 
   return (
@@ -78,6 +90,24 @@ const Profile = () => {
             </div>
           </div>
         </div>
+      </section>
+      <section>
+        <Box sx={{ width: "100%", typography: "body1" }}>
+          <TabContext value={tabValue}>
+            <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+              <TabList onChange={handleTabChange} aria-label='lab API tabs example'>
+                <Tab label='Posts' value='1' />
+                <Tab label='Replies' value='2' />
+                <Tab label='Media' value='3' />
+                <Tab label='Likes' value='4' />
+              </TabList>
+            </Box>
+            <TabPanel value='1'>users posts</TabPanel>
+            <TabPanel value='2'>users replies</TabPanel>
+            <TabPanel value='3'>Media</TabPanel>
+            <TabPanel value='4'>Likes</TabPanel>
+          </TabContext>
+        </Box>
       </section>
     </div>
   );
